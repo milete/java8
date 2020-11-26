@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jc.demo.mapper.DailyDataMapper">
+    <!--折线图数据-->
+    <select id="selectChartData" resultType="com.jc.demo.model.vo.DailyDataChartVo">
+        select date_format(production_time, '%Y-%m-%d') date,
+               sum(ifnull(sale_price, 0))               revenue
+        from order_item
+        where 1 = 1
+          and production_time between #{preDate} and concat(#{endDate}, ' 23:59:59')
+        group by date_format(production_time, '%Y-%m-%d')
+    </select>
+</mapper>
